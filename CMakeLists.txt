@@ -1,16 +1,18 @@
-cmake_minimum_required(VERSION 3.13.2)
+cmake_minimum_required(VERSION 3.13.3)
+project(auto_car LANGUAGES C CXX ASM)
 
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/cmake/ArduinoToolchain.cmake)
-set(CMAKE_CXX_STANDARD 14)
-set(PROJECT_NAME AutoCar)
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/cmake/Arduino-Toolchain.cmake)
 
-set(${PROJECT_NAME}_SRCS main.cpp)
-set(${PROJECT_NAME}_BOARD uno)
-set(${PROJECT_NAME}_PORT /dev/ttyACM0)
-set(${PROJECT_NAME}_SERIAL screen @SERIAL_PORT@ 9600)
+get_board_id(board_id mega atmega2560)
 
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libraries)
+add_arduino_executable(auto_car ${board_id} src/main.c)
 
-project(${PROJECT_NAME} C CXX)
+link_platform_library(auto_car Wire ${board_id})
 
-generate_arduino_firmware(${PROJECT_NAME})
+add_arduino_library(adafruit_sensor ${board_id} libs/Adafruit_Sensor/src/Adafruit_Sensor.h)
+add_arduino_library(adafruit_bno055 ${board_id} libs/Adafruit_BNO055/src/Adafruit_BNO055.h)
+add_arduino_library(adafruit_vl53l0x ${board_id} libs/Adafruit_VL53L0X/src/Adafruit_VL53L0X.h)
+
+link_arduino_library(auto_car adafruit_sensor ${board_id})
+link_arduino_library(auto_car adafruit_bno055 ${board_id})
+link_arduino_library(auto_car adafruit_vl53l0x ${board_id})
