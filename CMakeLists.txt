@@ -5,7 +5,7 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/cmake/Arduino-Toolchain.cmake)
 
 get_board_id(board_id mega atmega2560)
 
-add_arduino_executable(auto_car ${board_id} src/main.c)
+add_arduino_executable(auto_car ${board_id} src/auto_car.cpp)
 
 link_platform_library(auto_car Wire ${board_id})
 
