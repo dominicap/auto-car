@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.13.3)
-project(auto_car LANGUAGES C CXX ASM)
+project(auto_car LANGUAGES C CXX)
 
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_SOURCE_DIR}/cmake/Arduino-Toolchain.cmake)
 
